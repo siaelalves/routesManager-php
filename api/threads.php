@@ -25,4 +25,6 @@ require "threads/post.php" ;
 
 require "threads/thread.php" ;
 
+require "threads/user.php" ;
+
 require "threads/MEDIA_PRODUCT_TYPE.php" ;

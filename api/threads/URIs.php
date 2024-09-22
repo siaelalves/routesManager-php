@@ -18,5 +18,8 @@ enum URIs : string {
  case RETRIEVE = "https://graph.threads.net/v1.0/me/threads" ;
  
  case PUBLISH = "https://graph.threads.net/v1.0" ;
+  
+
+ case USER_DATA = "https://graph.threads.net/v1.0/me" ;
 
 }
