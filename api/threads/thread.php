@@ -17,10 +17,11 @@ class thread {
  public string |bool$shortcode ;
  public $children ;
  public bool $is_quote_post ;
+ public array $replies ;
 
  public int $views ;
  public int $likes ;
- public int $replies ;
+ public int $replies_count ;
  public int $reposts ;
  public int $quotes ;
 
@@ -92,6 +93,8 @@ class thread {
    $this->is_quote_post = false ;
   }
 
+  $this->replies = $this->get_replies ( ) ;
+
 
   $thread_insights = $this->get_insights ( ) ;
 
@@ -99,7 +102,7 @@ class thread {
 
   $this->views = $thread_insights [ "views" ] ;
   $this->likes = $thread_insights [ "likes" ] ;
-  $this->replies = $thread_insights [ "replies" ] ;
+  $this->replies_count = $thread_insights [ "replies" ] ;
   $this->reposts = $thread_insights [ "reposts" ] ;
   $this->quotes = $thread_insights [ "quotes" ] ;
   
@@ -111,11 +114,40 @@ class thread {
 
  }
 
+ public function get_replies ( ) {
+
+  $replies = [ ] ;
+
+  $parameters = http_build_query ( [ "fields" => REPLY_FIELDS::ALL->value , "reverse" => "false" , "access_token"=>THREADS_KEYS::ACCESS_TOKEN->value ] ) ;
+  
+  $request = new \routes\request ( ) ;
+  $request->url = new \routes\url ( URIs::PUBLISH->value . "/" . $this->id . "/" . "insights" . "?" . $parameters ) ;
+  
+  $replies_data = json_decode ( $request->get ( ) , true ) ;
+
+  if ( key_exists ( "data" , $replies_data ) ) {
+   
+   foreach ( $replies_data [ "data" ] as $reply_obj ) {
+
+    $key_name = array_keys ( $reply_obj ) [ 0 ] ;
+    $replies [ $reply_obj [ $key_name ] ] = $reply_obj [ "values" ] [ 0 ] [ "value" ] ;
+
+   }
+
+  } else {
+   print_r ( $replies_data ) ;
+   return $replies_data ;
+  }
+
+  return $replies ;
+
+ }
+
  private function get_insights ( ) : array|bool {
 
   $thread_insight = [ ] ;
 
-  $parameters = http_build_query ( [ "metric" => "views,likes,replies,reposts,quotes" , "access_token"=>THREADS_KEYS::ACCESS_TOKEN->value ] ) ;
+  $parameters = http_build_query ( [ "metric" => THREAD_METRICS::ALL->value , "access_token"=>THREADS_KEYS::ACCESS_TOKEN->value ] ) ;
   
   $request = new \routes\request ( ) ;
   $request->url = new \routes\url ( URIs::PUBLISH->value . "/" . $this->id . "/" . "insights" . "?" . $parameters ) ;
