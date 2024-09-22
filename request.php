@@ -314,6 +314,30 @@ class request {
 
  }
 
+ /**
+  * Realiza uma requisição GET na url especificada na propriedade $url.
+  */
+ public function get ( ) : string|bool {
+  
+  return file_get_contents ( $this->url->full ) ;
+
+ }
+
+ /**
+  * Realiza uma requisição POST na url especificada na propriedade $url.
+  */
+ public function post ( ) : string|bool {
+
+  $post = curl_init ( ) ;
+  curl_setopt ( $post , CURLOPT_URL , $this->website_root . "/" . $this->url->path->full ) ;
+  curl_setopt ( $post , CURLOPT_POST , 1 ) ;
+  curl_setopt ( $post , CURLOPT_POSTFIELDS , $this->url->query->full ) ;
+  curl_setopt ( $post , CURLOPT_RETURNTRANSFER, true);
+
+  return curl_exec ( $post ) ;
+
+ }
+
 }
 
 ?>
