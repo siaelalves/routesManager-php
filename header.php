@@ -21,7 +21,7 @@ class header {
 
  }
 
- private function get_method ( ) {
+ private function get_method ( ) : REQUEST_METHOD {
 
   if ( $_SERVER [ "REQUEST_METHOD" ] == "get" ) {
    
