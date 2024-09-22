@@ -18,6 +18,12 @@ class thread {
  public $children ;
  public bool $is_quote_post ;
 
+ public int $views ;
+ public int $likes ;
+ public int $replies ;
+ public int $reposts ;
+ public int $quotes ;
+
  
 
  public function __construct ( array $thread_obj ) {
@@ -85,6 +91,17 @@ class thread {
   }else{
    $this->is_quote_post = false ;
   }
+
+
+  $thread_insights = $this->get_insights ( ) ;
+
+  
+
+  $this->views = $thread_insights [ "views" ] ;
+  $this->likes = $thread_insights [ "likes" ] ;
+  $this->replies = $thread_insights [ "replies" ] ;
+  $this->reposts = $thread_insights [ "reposts" ] ;
+  $this->quotes = $thread_insights [ "quotes" ] ;
   
  }
 
@@ -92,6 +109,37 @@ class thread {
 
    return substr ( $this->text , 0 , 144 ) ;  
 
+ }
+
+ private function get_insights ( ) : array|bool {
+
+  $thread_insight = [ ] ;
+
+  $parameters = http_build_query ( [ "metric" => "views,likes,replies,reposts,quotes" , "access_token"=>THREADS_KEYS::ACCESS_TOKEN->value ] ) ;
+  
+  $request = new \routes\request ( ) ;
+  $request->url = new \routes\url ( URIs::PUBLISH->value . "/" . $this->id . "/" . "insights" . "?" . $parameters ) ;
+  
+  $insights = json_decode ( $request->get ( ) , true ) ;
+
+  if ( key_exists ( "data" , $insights ) ) {
+   
+   $k = 0 ;
+   foreach ( $insights [ "data" ] as $insight_obj ) {
+
+    $key_name = array_keys ( $insight_obj ) [ 0 ] ;
+    $thread_insight [ $insight_obj [ $key_name ] ] = $insight_obj [ "values" ] [ 0 ] [ "value" ] ;
+    $k++;
+
+   }
+
+  } else {
+   print_r ( $insights ) ;
+   return $insights ;
+  }
+
+  return $thread_insight ;
+  
  }
 
 }
