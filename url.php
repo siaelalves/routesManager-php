@@ -31,7 +31,15 @@ class url {
   
   $this->protocol = parse_url ( $url , PHP_URL_SCHEME ) ;
   
-  $this->path = new path ( ltrim ( parse_url ( $url , PHP_URL_PATH ) , "/" ) );
+  if ( parse_url ( $url , PHP_URL_PATH ) == null ) {
+
+   $this->path = new path ( "" );
+
+  } else {
+   
+   $this->path = new path ( ltrim ( parse_url ( $url , PHP_URL_PATH ) , "/" ) );
+
+  }  
 
   $this->full = $this->protocol . ":" . "//" . $this->host . "/" . $this->path->full;
 
