@@ -8,7 +8,7 @@ class video_post extends post {
 
 
 
- public function __construct ( token $token , string $text = "" , url $video_url ) {
+ public function __construct ( token $token , string $text , url $video_url ) {
 
   $this->token = $token ;
 

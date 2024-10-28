@@ -8,7 +8,7 @@ class image_post extends post {
 
 
 
- public function __construct ( token $token , string $text = "" , url $image_url ) {
+ public function __construct ( token $token , string $text , url $image_url ) {
 
   $this->token = $token ;
 

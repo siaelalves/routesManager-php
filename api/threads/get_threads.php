@@ -1,7 +1,14 @@
 <?php
 namespace routes\api\threads ;
 
-function get_threads ( array $fields = ["id","text","media_url","timestamp","permalink"], string $start_date , string $end_date , int $limit , token $token ) : array {
+/**
+ * @param array $fields Padrão: ["id","text","media_url","timestamp","permalink"]
+ */
+function get_threads ( array $fields , string $start_date , string $end_date , int $limit , token $token ) : array {
+
+ if ( $fields == [ ] ) {
+  $fields = ["id","text","media_url","timestamp","permalink"] ;
+ }
 
  $uri = URIs::RETRIEVE->value ;
 
