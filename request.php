@@ -215,7 +215,7 @@ class request {
   $this_content = $this_page;
 
   header ( "HTTP/1.0 404 Not Found" , true , 404 );
-  include "html/index.php";
+  include "html/root/index/index.php";
 
   return;
 
@@ -250,13 +250,13 @@ class request {
   // home
   if ( $page->type == \blog\PAGE_TYPE::HOME->value ) {   
    
-   include "html/index.php";
+   include "html/root/index/index.php";
    return ;
   
   // page    
   } else if ( $page->type == \blog\PAGE_TYPE::PAGE->value ) {   
 
-   include "html/index.php";
+   include "html/root/index/index.php";
    return ;
 
   // post
@@ -266,7 +266,7 @@ class request {
    $this_post->new ( $query->get_post_by_url($page->url->path->full) ) ;
    $this_content = $this_post; // não apague esta linha
 
-   include "html/index.php";
+   include "html/root/index/index.php";
    return ;
   
   // category
@@ -275,7 +275,7 @@ class request {
    $this_category = new \blog\category( $query->get_category_by_url($page->url->path->full) );
    $this_content = $this_category; // não apague esta linha
 
-   include "html/index.php";
+   include "html/root/index/index.php";
    return ;
 
   // tag
@@ -284,19 +284,19 @@ class request {
    $this_tag = new \blog\tag ( $query->get_tag_by_url ( $page->url->path->full ) ) ;
    $this_content = $this_tag ; // não apague esta linha
 
-   include "html/index.php";
+   include "html/root/index/index.php";
    return ;
   
   // blog
   } else if ( $page->type == \blog\PAGE_TYPE::BLOG->value ) {
 
-   include "html/index.php";
+   include "html/root/index/index.php";
    return ;
   
   // media
   } else if ( $page->type == \blog\PAGE_TYPE::MEDIA->value ) {
 
-   include "html/index.php";
+   include "html/root/index/index.php";
    return ;
 
   // php_script
@@ -307,7 +307,7 @@ class request {
    
   } else if ( $page->is_blog_page ( ) == true ) {
 
-   include "html/index.php";
+   include "html/root/index/index.php";
    return ;  
 
   }
