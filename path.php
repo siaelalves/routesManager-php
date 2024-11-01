@@ -1,32 +1,72 @@
 <?php
 namespace routes ;
 
+/**
+ * Esta classe é responsável por manusear a porção da URL denonimada path. Essa porção compreende 
+ * tudo que está entre o nome do domínio até o slug. Não inclui os argumentos de URL. Para obter 
+ * e manusear os argumentos de URL, procure por $request->url->query.
+ * 
+ * @author Siael Alves
+ * @copyright (c) Copyright 2024, Siael Alves
+ * @link Documentação: https://siaelalves.notion.site/path-7af5ea9684944a62a581f592bf112a90?pvs=4
+ */
 class path {
  
- /** Caminho da Url completo sem incluir a barra inicial. */
+ /** @var string Caminho da Url completo sem incluir a barra inicial. */
  public $full;
- /** Array de strings em que cada elemento representa uma parte de um caminho de Url dividido pela barra "/". */
- public $parts = [];
- /** String que representa a última parte de uma Url. */
- public $last_part;
- /** String que representa a penúltima parte de uma Url. */
- public $second_to_last;
- /** Integer que representa a quantidade de partes que há na Url. */
- public $lenght;
 
+ /** @var array Array de strings em que cada elemento representa uma parte de um caminho de Url dividido pela barra "/". */
+ public array $parts = [];
+
+ /** @var string String que representa a última parte de uma Url. */
+ public string $slug;
+
+ /** @var string String que representa a penúltima parte de uma Url. */
+ public string $previous_last;
+
+ /** @var int Integer que representa a quantidade de partes que há na Url. */
+ public int $lenght;
+
+ /**
+  * Inicialização o módulo path.
+  */
  public function __construct( $url_path ) {
 
-  $this->full = $url_path;
-  $this->parts = explode ( "/" , $url_path );
-  $this->last_part = $this->parts [ count ( $this->parts ) - 1 ];
-  $this->lenght = count ( $this->parts );
-
-  if ( count ( $this->parts ) - 2 < 0 ) {
-   $this->second_to_last = "" ;
-  } else {
-   $this->second_to_last = $this->parts [ count ( $this->parts ) - 2 ];
-  }
+  $this->full = $url_path ;
   
+  $this->parts = explode ( "/" , $url_path ) ;
+  
+  $this->lenght = count ( $this->parts ) ;
+
+  $this->slug = $this->slice ( $this->lenght - 1 , 1 ) ;
+
+  $this->previous_last = $this->slice ( $this->lenght - 2 , 1 ) ;
+  
+ }
+
+ /**
+  * Retorna uma parte do caminho de uma URL. Pode 1 ou vários segmentos, desde que 
+  * sejam consecutivos.
+  * @param int $offset Início da contagem.
+  * @param int $count Quantidade de segmentos a retornar.  
+  * @return string Retorna uma string com a parte da URL desejada. Se o início da 
+  * contagem for maior do que o número de segmentos da URL, ou se a quantidade de 
+  * segmentos disponíveis for menor do que a quantidade desejada, retorna uma 
+  * string vazia (""), sem erros.
+  *
+  * @example Considere a seguinte URL: "https://diariocode.com.br/blog/php/como-ler-arquivos-json-em-php".
+  * O valor de $this->parts = [ "blog" , "php" , "como-ler-arquivos-json-em-php" ]. 
+  * Se usar slice(2, 0), ela vai retornar a string: "blog/php".
+  * @link
+  */
+ public function slice ( int $offset = 0 , int $count = 1 ) : string {
+
+  $segments = array_slice ( $this->parts , $offset , $count ) ;
+
+  $new_path = implode ( "/" , $segments ) ;
+
+  return $new_path ;
+
  }
  
 }
