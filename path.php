@@ -57,7 +57,7 @@ class path {
   * @example Considere a seguinte URL: "https://diariocode.com.br/blog/php/como-ler-arquivos-json-em-php".
   * O valor de $this->parts = [ "blog" , "php" , "como-ler-arquivos-json-em-php" ]. 
   * Se usar slice(2, 0), ela vai retornar a string: "blog/php".
-  * @link
+  * @link Documentação: https://siaelalves.notion.site/slice-8de46e023f4d44b78bd29101fe0b628c?pvs=4
   */
  public function slice ( int $offset = 0 , int $count = 1 ) : string {
 
