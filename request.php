@@ -272,7 +272,7 @@ class request {
   // category
   } else if ( $page->type == \blog\PAGE_TYPE::CATEGORY->value ) {
    
-   $this_category = new \blog\category( $query->get_category_by_url($page->url->path->full) );
+   $this_category = new \blog\category( $query->get_category_by_url($page->url->full) );
    $this_content = $this_category; // não apague esta linha
 
    include "html/root/index/index.php";
@@ -281,7 +281,7 @@ class request {
   // tag
   } else if ( $page->type == \blog\PAGE_TYPE::TAG->value ) {
    
-   $this_tag = new \blog\tag ( $query->get_tag_by_url ( $page->url->path->full ) ) ;
+   $this_tag = new \blog\tag ( $query->get_tag_by_url ( $page->url->full ) ) ;
    $this_content = $this_tag ; // não apague esta linha
 
    include "html/root/index/index.php";
