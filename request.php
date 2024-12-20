@@ -77,12 +77,12 @@ class request {
 
  }
  /**
-  * Obtém o protocolo de segurança que está sendo utilizado pelo servidor. 
+  * Obtém o protocolo de segurança que está sendo utilizado pelo servidor.
   * @return string Retorna uma `string` que representa o protocolo seguro 
   * **https:** ou o protocolo inseguro **http:**. Note que a string retornada 
   * inclui sinal de dois-pontos(:), mas não inclui a barra dupla.
   */
- public function get_protocol ( ) {
+ private function get_protocol ( ) : string {
 
   if ( isset ( $_SERVER [ "HTTPS"] ) ) {
    if ( $_SERVER [ "HTTPS" ] == "on" ) {
@@ -99,13 +99,19 @@ class request {
   * @return string Retorna uma string que representa o endereço do website. Por 
   * exemplo: "diariocode.com.br" ou "autismofrases.com.br".
   */
- public function get_website_address() {
+ private function get_website_address ( ) : string {
 
-  if ( str_starts_with ( $_SERVER [ "SERVER_ADDR" ] , "192.168." ) ) {
-   return $_SERVER [ "SERVER_ADDR" ] ;
+  if ( isset ( $_SERVER [ "SERVER_ADDR" ] ) ) {
+
+   if ( str_starts_with ( $_SERVER [ "SERVER_ADDR" ] , "192.168." ) ) {
+    return $_SERVER [ "SERVER_ADDR" ] ;
+   }
+ 
+   return $_SERVER [ "SERVER_NAME" ] ;
+
   }
 
-  return $_SERVER [ "SERVER_NAME" ] ;
+  return "localhost" ;
 
  }
 
