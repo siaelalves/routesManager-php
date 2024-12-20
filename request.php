@@ -115,34 +115,6 @@ class request {
 
  }
 
- /**
-  * Registra um acesso a uma URL e salva no banco de dados.
-  */
- public function register_access ( ) {
-  global $admin , $paths ;
-
-  if ( $this->url->path->full == "favicon.ico" ) {
-   return ;
-  }
-
-  $statistics = [] ;
-  $statistics = $admin->statistics ;
-  try {
-   $id_stats = count ( $statistics ) ;
-  } catch (\Throwable $th) {
-   $id_stats = 0 ;
-  }
-  $new_data = [
-   "id" => $id_stats ,
-   "url" => $this->url->path->full ,
-   "type" => "" ,
-   "dateTime" => date ( $admin->date_time_formats["json"] )
-  ];
-
-  array_push ( $statistics , $new_data ) ;  
-  file_put_contents ( $paths->statistics_db , json_encode ( $statistics ) ) ;
-
- }
  
  /**
   * Obtém o conteúdo de uma página de acordo com o tipo de requisição realizada.
@@ -152,11 +124,6 @@ class request {
   global $admin, $request , $paths , $query; // não remover $request e $paths
   
   $url_to_load = new url ( rtrim ( $url_to_load , "/" ) );
-  
-  /* Registra um acesso ao log de estatísticas */
-  if ( $admin->config["saveStatistics"] == true ) {
-   $this->register_access ( );
-  }
 
   $page_obj = $query->get_page_by_url ( $url_to_load ) ;
 
