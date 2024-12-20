@@ -29,7 +29,7 @@ class request {
 
  public function __construct() {
 
-  $this->protocol = $this->set_protocol();
+  $this->protocol = $this->get_protocol ( ) ;
 
   $this->http_host = $_SERVER['HTTP_HOST'];
 
@@ -76,14 +76,21 @@ class request {
   return $url_no_last_part;
 
  }
+ /**
+  * Obtém o protocolo de segurança que está sendo utilizado pelo servidor. 
+  * @return string Retorna uma `string` que representa o protocolo seguro 
+  * **https:** ou o protocolo inseguro **http:**. Note que a string retornada 
+  * inclui sinal de dois-pontos(:), mas não inclui a barra dupla.
+  */
+ public function get_protocol ( ) {
 
- public function set_protocol() {
-
-  if ( SECURE_URL == true && LOCAL_MODE == false ) {
-   return "https:";
-  } else {
-   return "http:";
+  if ( isset ( $_SERVER [ "HTTPS"] ) ) {
+   if ( $_SERVER [ "HTTPS" ] == "on" ) {
+    return "https:" ;
+   }
   }
+
+  return "http:" ;
 
  }
 
