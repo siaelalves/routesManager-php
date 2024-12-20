@@ -39,7 +39,7 @@ class request {
 
   $this->body_content = file_get_contents("php://input");
 
-  $this->website_root=$this->protocol . "//" . $this->set_website_address();
+  $this->website_root=$this->protocol . "//" . $this->get_website_address();
 
   $this->url = new url( rtrim($this->website_root . "/" . $this->request_uri , "/") ) ;
 
@@ -94,14 +94,18 @@ class request {
 
  }
 
- public function set_website_address() {
-  global $admin ;
-  
-  if ( LOCAL_MODE == true ) {
-   return $admin->config["localIp"];
-  } else {
-   return $admin->website["address"];
+ /**
+  * Obtém o endreço do website.
+  * @return string Retorna uma string que representa o endereço do website. Por 
+  * exemplo: "diariocode.com.br" ou "autismofrases.com.br".
+  */
+ public function get_website_address() {
+
+  if ( str_starts_with ( $_SERVER [ "SERVER_ADDR" ] , "192.168." ) ) {
+   return $_SERVER [ "SERVER_ADDR" ] ;
   }
+
+  return $_SERVER [ "SERVER_NAME" ] ;
 
  }
 
