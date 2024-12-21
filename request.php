@@ -10,6 +10,8 @@ class request {
 
  /** A primeira parte do Url, podendo o ser "http" ou "https", sem as barras e sem os dois pontos. */
  public string $protocol;
+
+ public header $header ;
  
  /** Última parte da Url requisitada pelo usuário. Exemplo: diariocode.com.br/javascript/novidades-do-javascript; Neste caso, 
   * $request_uri seria "novidades-do-javascript". */
@@ -29,7 +31,7 @@ class request {
 
  public function __construct() {
 
-  $this->protocol = $this->get_protocol ( ) ;
+  $this->protocol = $this->get_protocol ( ) ;  
 
   $this->http_host = $_SERVER['HTTP_HOST'];
 
@@ -42,6 +44,8 @@ class request {
   $this->website_root=$this->protocol . "//" . $this->get_website_address();
 
   $this->url = new url( rtrim($this->website_root . "/" . $this->request_uri , "/") ) ;
+
+  //$this->header = new header ( $this->url ) ;
 
  }
 
@@ -118,14 +122,16 @@ class request {
  
  /**
   * Obtém o conteúdo de uma página de acordo com o tipo de requisição realizada.
-  * @param string $url_to_load URL cujo conteúdo deverá ser obtido.
+  * @param string $url URL cujo conteúdo deverá ser obtido.
   */
- function load_url( $url_to_load ) {
+ function load_url ( string $url ) {
   global $admin, $request , $paths , $query; // não remover $request e $paths
   
-  $url_to_load = new url ( rtrim ( $url_to_load , "/" ) );
+  $url = new url ( rtrim ( $url , "/" ) );
 
-  $page_obj = $query->get_page_by_url ( $url_to_load ) ;
+  $content = "" ;
+
+  $page_obj = $query->get_page_by_url ( $url ) ;
 
   // Adicionar middlewares aqui
 

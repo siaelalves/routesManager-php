@@ -1,23 +1,44 @@
 <?php
 namespace routes ;
 
+use DateTime ;
+
 class header {
 
+ public url $url ;
  public int $response ;
- public string $date_time ;
+ public string $server ;
+ public DateTime $date ;
+ public content_type $content_type ;
+ public string $transfer_encoding ;
+ public string $connection ;
  public string $last_modified ;
  public string $e_tag ;
  public int $lenght ;
- public content_type $content_type ;
 
  public REQUEST_METHOD $method ;
  public string $body ;
 
- public function __construct ( ) {
+
+ public function __construct ( url $url ) {
+
+  $headerData = get_headers ( $url->full , true ) ;  
+  
+  $this->response = new http_response ( $headerData [ 0 ] ) ;
+
+  $this->server = $headerData [ "Server" ] ;
+  
+  $this->date = new DateTime ( $headerData [ "Date" ] ) ;
+  
+  $this->content_type = new content_type ( $headerData [ "Content-Type" ] ) ;
+
+  $this->transfer_encoding = $headerData [ "Transfer-Encoding" ] ;
+
+  $this->connection = $headerData [ "Connection" ] ;
 
   $this->method = $this->get_method ( ) ;
-  
-  $this->body = file_get_contents ( "php://input" ) ;
+
+  $this->body = file_get_contents ( $this->url->full ) ;
 
  }
 
