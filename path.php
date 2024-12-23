@@ -47,16 +47,22 @@ class path {
  /**
   * Retorna uma parte do caminho de uma URL. Pode 1 ou vários segmentos, desde que 
   * sejam consecutivos.
-  * @param int $offset Início da contagem.
-  * @param int $count Quantidade de segmentos a retornar.  
+  * @param int $offset Início da contagem. Índice do qual deseja iniciar a contagem. 
+  * @param int $count Quantidade de segmentos a retornar. 
   * @return string Retorna uma string com a parte da URL desejada. Se o início da 
   * contagem for maior do que o número de segmentos da URL, ou se a quantidade de 
   * segmentos disponíveis for menor do que a quantidade desejada, retorna uma 
   * string vazia (""), sem erros.
   *
-  * @example Considere a seguinte URL: "https://diariocode.com.br/blog/php/como-ler-arquivos-json-em-php".
-  * O valor de $this->parts = [ "blog" , "php" , "como-ler-arquivos-json-em-php" ]. 
-  * Se usar slice(2, 0), ela vai retornar a string: "blog/php".
+  * @example # Exemplo: Como extrair apenas as 2 primeiras partes de um caminho
+  * ```
+  * $url = new url("https://diariocode.com.br/blog/php/como-ler-arquivos-json-em-php"); 
+  * $url->path->parts = [ "blog" , "php" , "como-ler-arquivos-json-em-php" ];
+  * $urlCategory = $url->path->slice(2, 0); 
+  * echo $urlCategory; 
+  * ```
+  * **Vai retornar:**
+  * `"blog/php"`
   * @link Documentação: https://siaelalves.notion.site/slice-8de46e023f4d44b78bd29101fe0b628c?pvs=4
   */
  public function slice ( int $offset = 0 , int $count = 1 ) : string {
@@ -70,5 +76,3 @@ class path {
  }
  
 }
-
-?>
