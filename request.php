@@ -49,37 +49,6 @@ class request {
 
  }
 
- public function get_last_part_of_url( $url_to_get ) {
-  global $request;
-
-  $url_to_get = str_replace( $request->website_root , "" , $url_to_get );
- 
-  $url_parts = explode( "/" , $url_to_get );
-
-  $last_index = count( $url_parts ) - 1;
-
-  $last_part = $url_parts[$last_index];
-
-  return $last_part;
-
- }
-
- public function get_url_no_last_part ( $url_to_get ) {
-  global $request ;
-
-  $url_to_get = str_replace( $request->website_root , "" , $url_to_get );
-
-  $url_parts = explode( "/" , $url_to_get );
-
-  $last_index = count( $url_parts ) - 1;
-
-  array_splice ( $url_parts , $last_index ) ;
-
-  $url_no_last_part = implode ( "/" , $url_parts );
-
-  return $url_no_last_part;
-
- }
  /**
   * Obtém o protocolo de segurança que está sendo utilizado pelo servidor.
   * @return string Retorna uma `string` que representa o protocolo seguro 
