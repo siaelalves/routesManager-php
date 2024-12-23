@@ -1,47 +1,73 @@
 <?php
 namespace routes ;
 
-use blog\PAGE_TYPE;
-
-/** Organiza informações relativas à Url atual acessada pelo cliente. */
+/** 
+ * Organiza e manipula informações relativas à Url atual acessada pelo cliente.
+*/
 class request {
 
- private string $http_host;
-
- /** A primeira parte do Url, podendo o ser "http" ou "https", sem as barras e sem os dois pontos. */
+ /**
+  * @var string A primeira parte da Url, podendo o ser "http" ou "https". Não retorna as barras duplas nem os dois pontos. 
+ */
  public string $protocol;
 
+ /**
+  * @var header $header Dá acesso às informações de cabeçalho da página.
+  */
  public header $header ;
  
- /** Última parte da Url requisitada pelo usuário. Exemplo: diariocode.com.br/javascript/novidades-do-javascript; Neste caso, 
-  * $request_uri seria "novidades-do-javascript". */
+ /**
+  * @var string Última parte da Url requisitada pelo usuário. Exemplo: Na Url 
+  * `diariocode.com.br/javascript/novidades-do-javascript`, `$request_uri` retornaria "novidades-do-javascript".
+ */
  public string $request_uri;
 
- /** Tipo de requisição realizada a uma URL. */
- public string $request_method;
+ /**
+  * @var REQUEST_METHOD Tipo de requisição realizada a uma URL. O enumerador 
+  * REQUEST_METHOD possui as seguintes constantes e seus respectivos valores: 
+  * - GET = "GET"
+  * - POST = "POST"
+  * - PUT = "PUT"
+  * - DELETE = "DELETE 
+  */
+ public REQUEST_METHOD $request_method;
 
- /** Conteúdo de body do cabeçalho HTTP da requisição. */
+ /**
+  * @var string Conteúdo de body do cabeçalho HTTP da requisição. */
  public string $body_content;
 
- /** Endereço raiz do site sem a barra no final incluindo o protocolo. Exemplo: "https://diariocode.com.br". */
+ /**
+  * @var string Endereço raiz do site sem a barra no final incluindo o protocolo. 
+  * Por exemplo: se o cliente acessar a página "https://diariocode.com.br/python", 
+  * `website_root` retornará "diariocode.com.br". 
+  */
  public string $website_root;
 
- /** Url completa da requisição incluindo protocolo, endereço do site e o restante das pastas em que estiver localizado o conteúdo. */
+ /** 
+  * @var url Representa a Url completa da requisição incluindo protocolo, endereço do 
+  * site e o restante dos segmentos do conteúdo. Através da classe `url`, é possível 
+  * obter os elementos da Url separamente.
+  */
  public url $url;
 
+
+
+ /**
+  * Construtor da classe `request`.
+  */
  public function __construct() {
 
   $this->protocol = $this->get_protocol ( ) ;  
 
-  $this->http_host = $_SERVER['HTTP_HOST'];
+  $this->http_host = $_SERVER['HTTP_HOST'] ;
 
-  $this->request_uri = ltrim( $_SERVER['REQUEST_URI'] , "/" );
+  $this->request_uri = ltrim( $_SERVER['REQUEST_URI'] , "/" ) ;
 
-  $this->request_method = $_SERVER['REQUEST_METHOD'];
+  $this->request_method = REQUEST_METHOD::tryFrom ( $_SERVER['REQUEST_METHOD'] ) ;
 
-  $this->body_content = file_get_contents("php://input");
+  $this->body_content = file_get_contents("php://input") ;
 
-  $this->website_root=$this->protocol . "//" . $this->get_website_address();
+  $this->website_root=$this->protocol . "//" . $this->get_website_address() ;
 
   $this->url = new url( rtrim($this->website_root . "/" . $this->request_uri , "/") ) ;
 
@@ -70,7 +96,9 @@ class request {
  /**
   * Obtém o endreço do website.
   * @return string Retorna uma string que representa o endereço do website. Por 
-  * exemplo: "diariocode.com.br" ou "autismofrases.com.br".
+  * exemplo: "diariocode.com.br" ou "autismofrases.com.br". Em cso de erro, 
+  * por exemplo, se numa rara ocasião não for possível ter acesso às informações 
+  * do servidor, retornará "localhost".
   */
  private function get_website_address ( ) : string {
 
@@ -92,6 +120,8 @@ class request {
 
  /**
   * Realiza uma requisição GET na url especificada na propriedade $url.
+  * @return string|bool Retorna o conteúdo da requisição no formato String, ou 
+  * retornará `false` em caso de erros.
   */
  public function get ( ) : string|bool {
   
@@ -101,19 +131,44 @@ class request {
 
  /**
   * Realiza uma requisição POST na url especificada na propriedade $url.
+  * @return string|array Retorna o conteúdo da requisição no formato String, ou 
+  * retorna uma array associativa contendo os detalhes do erro. Essa array 
+  * associativa possui as seguintes chaves:
+  *
+  * - success: em caso de erro, possui o valor `false`. Pode ser usado para 
+  * verificar se a requisição foi bem-sucedida ou não;
+  * - code: código do erro;
+  * - message: mensagem de erro detalhando o que aconteceu;
+  *
+  * O endpoint no qual se está fazendo a requisição pode ter mensagens de erro 
+  * personalizadas. O tratamento de erro apresentado aqui indicará erros apenas 
+  * na tentativa de obter os dados.
   */
- public function post ( ) : string|bool {
+ public function post ( ) : string|array {
 
+  $result = "" ;
   $post = curl_init ( ) ;
   curl_setopt ( $post , CURLOPT_URL , $this->website_root . "/" . $this->url->path->full ) ;
   curl_setopt ( $post , CURLOPT_POST , 1 ) ;
   curl_setopt ( $post , CURLOPT_POSTFIELDS , $this->url->query->full ) ;
   curl_setopt ( $post , CURLOPT_RETURNTRANSFER, true);
 
-  return curl_exec ( $post ) ;
+  try {
+   
+   $result = curl_exec ( $post ) ;
+
+  } catch (\Throwable $th) {
+   
+   $result = [
+    "success" => false ,
+    "code" => $th->getCode ( ) ,
+    "message" => "Erro na tentativa de fazer uma requisição post. Detalhes do erro: " . $th->getMessage ( ) ,
+   ] ;
+
+  }
+
+  return $result ;
 
  }
 
 }
-
-?>
