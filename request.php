@@ -6,6 +6,8 @@ namespace routes ;
 */
 class request {
 
+ public string $http_host ;
+
  /**
   * @var string A primeira parte da Url, podendo o ser "http" ou "https". Não retorna as barras duplas nem os dois pontos. 
  */
@@ -71,7 +73,7 @@ class request {
 
   $this->url = new url( rtrim($this->website_root . "/" . $this->request_uri , "/") ) ;
 
-  //$this->header = new header ( $this->url ) ;
+  // $this->header = new header ( $this->url ) ;
 
  }
 
@@ -121,10 +123,46 @@ class request {
  /**
   * Realiza uma requisição GET na url especificada na propriedade $url.
   * @return string|bool Retorna o conteúdo da requisição no formato String, ou 
-  * retornará `false` em caso de erros.
+  * retorna uma array associativa contendo os detalhes do erro. Essa array 
+  * associativa possui as seguintes chaves:
+  *
+  * - success: em caso de erro, possui o valor `false`. Pode ser usado para 
+  * verificar se a requisição foi bem-sucedida ou não;
+  * - code: código do erro. Pode representar um erro interno ou um erro de 
+  * HTTP;
+  * - message: mensagem de erro detalhando o que aconteceu;
+  *
+  * O endpoint no qual se está fazendo a requisição pode ter mensagens de erro 
+  * personalizadas. O tratamento de erro apresentado aqui indicará erros apenas 
+  * na tentativa de obter os dados.
+  * Visto que as mensagens de erros podem ser lidas pelos visitantes, essas 
+  * mensagens não são altamente descritivas.
   */
- public function get ( ) : string|bool {
+ public function get ( ) : string|array {
   
+  $header = get_headers ( $this->url->full ) ;
+  if ($header && strpos($header[0], '404') !== false) {
+   $result = [
+    "success" => false ,
+    "code" => 404 ,
+    "message" => "A URL requisitada não existe. Erro 404." ,
+   ] ;
+
+   print_r ( $result ) ;
+   return $result ;   
+  }
+
+  if ($header && strpos($header[0], '500') !== false) {
+   $result = [
+    "success" => false ,
+    "code" => 500 ,
+    "message" => "Houve um erro interno no servidor ao requisitar uma URL solicitada. Erro 500." ,
+   ] ;
+
+   print_r ( $result ) ;
+   return $result ;   
+  }
+
   return file_get_contents ( $this->url->full ) ;
 
  }
@@ -143,10 +181,36 @@ class request {
   * O endpoint no qual se está fazendo a requisição pode ter mensagens de erro 
   * personalizadas. O tratamento de erro apresentado aqui indicará erros apenas 
   * na tentativa de obter os dados.
+  * Visto que as mensagens de erros podem ser lidas pelos visitantes, essas 
+  * mensagens não são altamente descritivas.
   */
  public function post ( ) : string|array {
 
   $result = "" ;
+
+  $header = get_headers ( $this->url->full ) ;
+  if ($header && strpos($header[0], '404') !== false) {
+   $result = [
+    "success" => false ,
+    "code" => 404 ,
+    "message" => "A URL requisitada não existe. Erro 404." ,
+   ] ;
+
+   print_r ( $result ) ;
+   return $result ;   
+  }
+
+  if ($header && strpos($header[0], '500') !== false) {
+   $result = [
+    "success" => false ,
+    "code" => 500 ,
+    "message" => "Houve um erro interno no servidor ao requisitar uma URL solicitada. Erro 500." ,
+   ] ;
+
+   print_r ( $result ) ;
+   return $result ;   
+  }
+
   $post = curl_init ( ) ;
   curl_setopt ( $post , CURLOPT_URL , $this->website_root . "/" . $this->url->path->full ) ;
   curl_setopt ( $post , CURLOPT_POST , 1 ) ;
