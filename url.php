@@ -1,23 +1,52 @@
 <?php
 namespace routes ;
 
-
+/**
+ * Manipula a Url da rota que se deseja fazer uma requisição.
+ */
 class url {
 
- /** Todo a URL incluindo protocolo, domínio e pastas */
+ /**
+  * Todo a URL incluindo protocolo, domínio, segmentos e argumentos.
+ */
  public string $full;
- /** Endereço do website. */
+
+ /**
+  * Endereço do website.
+  */
  public string $host;
+
+ /**
+  * Porta que está especificada na Url. Se não houver, assume o valor de uma string vazia.
+  */
  public string $port;
- /** Argumentos de Url. */
+
+ /**
+  * Argumentos de Url utilizadas na solicitação.
+ */
  public query $query;
+
  public string $pass;
  public string $user;
  public string $fragment;
+
+ /**
+  * Protocolo utilizado na Url.
+  */
  public string $protocol;
- /** Página acessada, sem os argumentos de Url e sem o protocolo. A barra inicial é removida. */
+
+ /**
+  * Caminho da Url, expressão após o domínio. Se houver alguma barra no final da expressão, 
+  * ela é removida.
+ */
  public path $path;
 
+
+
+ /**
+  * Construtor da classe `Url`.
+  * @param string $url Url que se deseja manipular.  
+  */
  public function __construct ( $url ) {
   
   $this->host = parse_url ( $url , PHP_URL_HOST ) ;
@@ -50,5 +79,3 @@ class url {
  }
  
 }
-
-?>
