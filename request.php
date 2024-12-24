@@ -2,10 +2,16 @@
 namespace routes ;
 
 /** 
- * Organiza e manipula informações relativas à Url atual acessada pelo cliente.
+ * Organiza e manipula informações relativas às requisições realizadas pelo cliente.
 */
 class request {
 
+ /**
+  * @var string Representa o endereço do website para onde é enviada a requisição. Se 
+  * a Url a ser requisitada é 
+  * "http://diariocode.com.br/blog/linux/como-personalizar-diretorio-padrao-xampp-linux-debian", 
+  * o valor de `$http_host` é "diariocode.com.br".
+  */
  public string $http_host ;
 
  /**
@@ -35,7 +41,8 @@ class request {
  public REQUEST_METHOD $request_method;
 
  /**
-  * @var string Conteúdo de body do cabeçalho HTTP da requisição. */
+  * @var string Conteúdo de body do cabeçalho HTTP da requisição. 
+  */
  public string $body_content;
 
  /**
@@ -57,23 +64,21 @@ class request {
  /**
   * Construtor da classe `request`.
   */
- public function __construct() {
+ public function __construct ( ) {
 
-  $this->protocol = $this->get_protocol ( ) ;  
+  $this->protocol = $this->get_protocol ( ) ;
 
-  $this->http_host = $_SERVER['HTTP_HOST'] ;
+  $this->http_host = $_SERVER [ 'HTTP_HOST' ] ;
 
-  $this->request_uri = ltrim( $_SERVER['REQUEST_URI'] , "/" ) ;
+  $this->request_uri = ltrim ( $_SERVER [ 'REQUEST_URI' ] , "/" ) ;
 
-  $this->request_method = REQUEST_METHOD::tryFrom ( $_SERVER['REQUEST_METHOD'] ) ;
+  $this->request_method = REQUEST_METHOD::tryFrom ( $_SERVER [ 'REQUEST_METHOD' ] ) ;
 
-  $this->body_content = file_get_contents("php://input") ;
+  $this->body_content = file_get_contents ( "php://input" ) ;
 
-  $this->website_root=$this->protocol . "//" . $this->get_website_address() ;
+  $this->website_root=$this->protocol . "//" . $this->get_website_address ( ) ;
 
-  $this->url = new url( rtrim($this->website_root . "/" . $this->request_uri , "/") ) ;
-
-  // $this->header = new header ( $this->url ) ;
+  $this->url = new url ( rtrim ( $this->website_root . "/" . $this->request_uri , "/" ) ) ;
 
  }
 
@@ -118,8 +123,6 @@ class request {
 
  }
 
- 
-
  /**
   * Realiza uma requisição GET na url especificada na propriedade $url.
   * @return string|bool Retorna o conteúdo da requisição no formato String, ou 
@@ -141,7 +144,7 @@ class request {
  public function get ( ) : string|array {
   
   $header = get_headers ( $this->url->full ) ;
-  if ($header && strpos($header[0], '404') !== false) {
+  if ( $header && strpos ( $header[0] , '404' ) !== false ) {
    $result = [
     "success" => false ,
     "code" => 404 ,
@@ -152,7 +155,7 @@ class request {
    return $result ;   
   }
 
-  if ($header && strpos($header[0], '500') !== false) {
+  if ( $header && strpos ( $header[0] , '500' ) !== false ) {
    $result = [
     "success" => false ,
     "code" => 500 ,
@@ -189,7 +192,7 @@ class request {
   $result = "" ;
 
   $header = get_headers ( $this->url->full ) ;
-  if ($header && strpos($header[0], '404') !== false) {
+  if ( $header && strpos ( $header[0] , '404' ) !== false ) {
    $result = [
     "success" => false ,
     "code" => 404 ,
@@ -197,10 +200,10 @@ class request {
    ] ;
 
    print_r ( $result ) ;
-   return $result ;   
+   return $result ;
   }
 
-  if ($header && strpos($header[0], '500') !== false) {
+  if ( $header && strpos ( $header[0] , '500' ) !== false ) {
    $result = [
     "success" => false ,
     "code" => 500 ,
