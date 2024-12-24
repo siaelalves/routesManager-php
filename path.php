@@ -2,9 +2,9 @@
 namespace routes ;
 
 /**
- * Esta classe é responsável por manusear a porção da URL denonimada path. Essa porção compreende 
+ * Esta classe é responsável por manusear os segmentos de uma Url. Essa porção compreende 
  * tudo que está entre o nome do domínio até o slug. Não inclui os argumentos de URL. Para obter 
- * e manusear os argumentos de URL, procure por $request->url->query.
+ * e manusear os argumentos de URL, utilize a classe `routes\query`.
  * 
  * @author Siael Alves
  * @copyright (c) Copyright 2024, Siael Alves
