@@ -38,6 +38,20 @@ class mime {
   */
  public function __construct ( string $expression ) {
 
+  if ( !gettype ( $expression ) == "string" ) {
+   echo "O argumento para construir a classe mime precisa ser do 
+   tipo <strong>string</strong>. Ao invés disso, foi fornecido 
+   um tipo <strong>" . gettype ( $expression ) . "</strong>." ;
+   return ;
+  }
+
+  if ( strpos ( $expression , "/" ) == false ) {
+   echo "O argumento para construir a classe mime precisa ser uma 
+   expressão de MIME válida, com tipo e subtipo separados por uma 
+   barra: \"/." ;
+   return ;
+  }
+
   $data = explode ( "/" , $expression ) ;
 
   $this->type = $data [ 0 ] ;
