@@ -13,23 +13,23 @@ class query {
  /**
   * @var string String com todos os parâmetros da Url.
  */
- public string $full;
+ public $full = "" ;
 
  /**
   * @var array Matriz associativa com chaves e valores que correspondem às 
   * chaves e valores dos argumentos da Url.
  */
- public $parameters = [ ];
+ public $parameters = [ ] ;
 
  /**
   * @var array Matriz com os nomes das chaves de cada parâmetro. 
  */
- public $keys = [ ];
+ public $keys = [ ] ;
 
  /**
   * @var array Matriz com os valores de cada chave dos parâmetros. 
  */
- public $values = [ ]; 
+ public $values = [ ] ; 
 
 
 
@@ -37,7 +37,7 @@ class query {
   * Construtor da classe `query`.
   * @param string $url_query Argumentos da Url em texto.
   */
- public function __construct ( string $url_query ) {
+ public function __construct ( $url_query ) {
 
   if ( $url_query != "" ) {
 
@@ -46,11 +46,11 @@ class query {
    $this->parameters = explode ( "&" , $url_query ) ;
 
    foreach ( $this->parameters as $parameter ) {
-    array_push ( $this->keys , explode ( "=" , $parameter ) [0] ) ;
+    array_push ( $this->keys , explode ( "=" , $parameter ) [ 0 ] ) ;
    }
 
    foreach ( $this->parameters as $parameter ) {
-    array_push ( $this->values , explode ( "=" , $parameter )[1] ) ;
+    array_push ( $this->values , explode ( "=" , $parameter ) [ 1 ] ) ;
    }
 
    // parâmeteros para uma matriz associativa
