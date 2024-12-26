@@ -2,7 +2,8 @@
 namespace routes ;
 
 /**
- * Manipula a parte da Url que corresponde aos parâmetros de Url.
+ * Manipula a parte da Url que corresponde aos parâmetros de Url. 
+ * Permite obter os parâmetros da Url separadamente.
  * 
  * @author Siael Alves
  * @copyright (c) Copyright 2024, Siael Alves

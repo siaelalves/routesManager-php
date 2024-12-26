@@ -2,7 +2,17 @@
 namespace routes ;
 
 /**
- * Dá acesso ao tipo MIME do conteúdo obtido pela Web.
+ * Permite identificar e obter tipo MIME do conteúdo obtido numa página 
+ * da Web. O MIME é uma sigla que significa **"Multipurpose Internet Mail 
+ * Extensions"** e é um padrão que indica o tipo de conteúdo que está 
+ * sendo transmitido na página Web. Por exemplo, o MIME de uma página 
+ * Web pode ser **"text/html"** ou **"text/json"**. Esta classe permite que 
+ * você **identifique** o tipo e subtipo de um MIME, bem como o MIME
+ * completo.
+ * 
+ * @author Siael Alves
+ * @copyright (c) Copyright 2024, Siael Alves
+ * @link Indisponível
  */
 class mime {
 

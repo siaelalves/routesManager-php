@@ -2,7 +2,15 @@
 namespace routes ;
 
 /**
- * Manipula a Url da rota que se deseja fazer uma requisição.
+ * Manipula a Url da rota que se deseja fazer uma requisição. 
+ * Permite obter o protocolo, domínio, segmentos e argumentos da Url. 
+ * Através da classe `url`, é possível obter os elementos da Url separadamente. 
+ * Por exemplo, é possível obter o protocolo, o domínio, os segmentos e os argumentos 
+ * da Url.
+ * 
+ * @author Siael Alves
+ * @copyright (c) Copyright 2024, Siael Alves
+ * @link Indisponível
  */
 class url {
 

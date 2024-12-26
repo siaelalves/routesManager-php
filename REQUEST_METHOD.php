@@ -1,9 +1,12 @@
 <?php
-/* © 2024 Copyright, Siael Alves */
 namespace routes ;
 
 /**
- * Determina os tipos de requisições HTTP permitidos no site.
+ * Lista os tipos de requisições HTTP permitidos no site.
+ * 
+ * @author Siael Alves
+ * @copyright (c) Copyright 2024, Siael Alves
+ * @link Indisponível
  */
 enum REQUEST_METHOD : string {
  

@@ -2,7 +2,12 @@
 namespace routes ;
 
 /** 
- * Organiza e manipula informações relativas às requisições realizadas pelo cliente.
+ * Organiza e manipula informações relativas às requisições realizadas pelo cliente. 
+ * Também permite realizar requisições para uma Url.
+ * 
+ * @author Siael Alves
+ * @copyright (c) Copyright 2024, Siael Alves
+ * @link Indisponível
 */
 class request {
 

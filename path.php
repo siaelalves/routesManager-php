@@ -2,7 +2,7 @@
 namespace routes ;
 
 /**
- * Esta classe é responsável por manusear os segmentos de uma Url. Essa porção compreende 
+ * Esta classe é responsável por manusear, obter e listar os segmentos de uma Url. Essa porção compreende 
  * tudo que está entre o nome do domínio até o slug. Não inclui os argumentos de URL. Para obter 
  * e manusear os argumentos de URL, utilize a classe `routes\query`.
  * 
