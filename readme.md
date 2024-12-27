@@ -55,25 +55,65 @@ As propriedades `path`e `query` são classes de mesmo nome. Essas classes permit
 
 ## Mapa de utilização de Routes Manager
 
-Abaixo, está o mapa de classes e propriedades de Routes Manager. 
+Abaixo, está o mapa de classes e propriedades de Routes Manager.
 
 * routes
- * REQUEST_METHOD [ enum ]
- * request
-  * http_host
-  * protocol
---- header
---- request_uri
---- request_method
---- body_content
---- website_root
---- url
--- url
--- query
--- path
--- header [ possui erros ]
--- mime
--- content_type
--- http_version
--- http_response
--- api [ será descontinuado ]
+    * **REQUEST_METHOD [ enum:string ]**
+
+    * **request [ classe ]**
+        * http_host [ propriedade:string ]
+        * protocol [ propriedade:string ]
+        * header [ propriedade:header ]
+        * request_uri [ propriedade:string ]
+        * request_method [ propriedade:string ]
+        * body_content [ propriedade:string ]
+        * website_root [ propriedade:string ]
+        * url [ propriedade:url ]
+
+    * **url [ classe ]**
+        * full [ propriedade:string ]
+        * host [ propriedade:string ]
+        * port [ propriedade:string ]
+        * query [ propriedade:query ]
+        * pass [ propriedade:string ]
+        * user [ propriedade:string ]
+        * fragment [ propriedade:string ]
+        * protocol [ propriedade:string ]
+        * path [ propriedade:path ]
+
+    * **query [ classe ]**
+        * full [ propriedade:string ]
+        * parameters [ propriedade:array ]
+        * keys [ propriedade:array ]
+        * values [ propriedade:array ]
+
+    * **path [ classe ]**
+        * full [ propriedade:string ]
+        * parts [ propriedade:array ]
+        * slug [ propriedade:string ]
+        * previous_last [ propriedade:string ]
+        * lenght [ propriedade:int ]
+        
+        * slice [ método ]
+
+    * **header [ classe ]**
+        * url [ propriedade:url ]
+        * response [ propriedade:int ]
+        * server [ propriedade:int ]
+        * date [ propriedade:DateTime ]
+        * content_type [ propriedade:content_type ]
+        * transfer_encoding [ propriedade:string ]
+        * connection [ propriedade:string ]
+        * last_modified [ propriedade:string ]
+        * e_tag [ propriedade:string ]
+        * lenght [ propriedade:int ]
+        * method [ propriedade:REQUEST_METHOD ]
+        * body [ propriedade:string ]
+        
+        * get_method [ método ]
+
+    * mime [ classe ]
+    * content_type [ classe ]
+    * http_version [ classe ]
+    * http_response [ classe ]
+    * api [ classe ]
