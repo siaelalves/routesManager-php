@@ -61,59 +61,103 @@ Abaixo, está o mapa de classes e propriedades de Routes Manager.
     * **REQUEST_METHOD [ enum:string ]**
 
     * **request [ classe ]**
-        * http_host [ propriedade:string ]
-        * protocol [ propriedade:string ]
-        * header [ propriedade:header ]
-        * request_uri [ propriedade:string ]
-        * request_method [ propriedade:string ]
-        * body_content [ propriedade:string ]
-        * website_root [ propriedade:string ]
-        * url [ propriedade:url ]
+        * PROPRIEDADES
+            * http_host [ propriedade:string ]
+            * protocol [ propriedade:string ]
+            * header [ propriedade:header ]
+            * request_uri [ propriedade:string ]
+            * request_method [ propriedade:string ]
+            * body_content [ propriedade:string ]
+            * website_root [ propriedade:string ]
+            * url [ propriedade:url ]
+        * MÉTODOS
+            * get_protocol ( )
+            * get_website_address ( )
+            * get ( )
+            * post ( )
 
     * **url [ classe ]**
-        * full [ propriedade:string ]
-        * host [ propriedade:string ]
-        * port [ propriedade:string ]
-        * query [ propriedade:query ]
-        * pass [ propriedade:string ]
-        * user [ propriedade:string ]
-        * fragment [ propriedade:string ]
-        * protocol [ propriedade:string ]
-        * path [ propriedade:path ]
+        * PROPRIEDADES
+            * full [ propriedade:string ]
+            * host [ propriedade:string ]
+            * port [ propriedade:string ]
+            * query [ propriedade:query ]
+            * pass [ propriedade:string ]
+            * user [ propriedade:string ]
+            * fragment [ propriedade:string ]
+            * protocol [ propriedade:string ]
+            * path [ propriedade:path ]
+        * MÉTODOS
+            * *Não possui métodos*
 
     * **query [ classe ]**
-        * full [ propriedade:string ]
-        * parameters [ propriedade:array ]
-        * keys [ propriedade:array ]
-        * values [ propriedade:array ]
+        * PROPRIEDADES
+            * full [ propriedade:string ]
+            * parameters [ propriedade:array ]
+            * keys [ propriedade:array ]
+            * values [ propriedade:array ]
+        * MÉTODOS
+            * *Não possui métodos*
 
     * **path [ classe ]**
-        * full [ propriedade:string ]
-        * parts [ propriedade:array ]
-        * slug [ propriedade:string ]
-        * previous_last [ propriedade:string ]
-        * lenght [ propriedade:int ]
-        
-        * slice [ método ]
+        * PROPRIEDADES
+            * full [ propriedade:string ]
+            * parts [ propriedade:array ]
+            * slug [ propriedade:string ]
+            * previous_last [ propriedade:string ]
+            * lenght [ propriedade:int ]
+        * MÉTODOS
+            * slice ( )
 
     * **header [ classe ]**
-        * url [ propriedade:url ]
-        * response [ propriedade:int ]
-        * server [ propriedade:int ]
-        * date [ propriedade:DateTime ]
-        * content_type [ propriedade:content_type ]
-        * transfer_encoding [ propriedade:string ]
-        * connection [ propriedade:string ]
-        * last_modified [ propriedade:string ]
-        * e_tag [ propriedade:string ]
-        * lenght [ propriedade:int ]
-        * method [ propriedade:REQUEST_METHOD ]
-        * body [ propriedade:string ]
-        
-        * get_method [ método ]
+        * PROPRIEDADES
+            * url [ propriedade:url ]
+            * response [ propriedade:int ]
+            * server [ propriedade:int ]
+            * date [ propriedade:DateTime ]
+            * content_type [ propriedade:content_type ]
+            * transfer_encoding [ propriedade:string ]
+            * connection [ propriedade:string ]
+            * last_modified [ propriedade:string ]
+            * e_tag [ propriedade:string ]
+            * lenght [ propriedade:int ]
+            * method [ propriedade:REQUEST_METHOD ]
+            * body [ propriedade:string ]
+        * MÉTODOS
+            * get_method ( )
 
-    * mime [ classe ]
-    * content_type [ classe ]
-    * http_version [ classe ]
-    * http_response [ classe ]
-    * api [ classe ]
+    * **mime [ classe ]**
+        * PROPRIEDADES
+            * type [ propriedade:string ]
+            * sub_type [ propriedade:string ]
+            * full [ propriedade:string ]
+        * MÉTODOS
+            * *Não possui métodos*       
+
+    * **content_type [ classe ]**
+        * PROPRIEDADES
+            * mime [ propriedade:mime ]
+            * encoding [ propriedade:string ]
+            * full [ propriedade:string ]
+        * MÉTODOS
+            * *Não possui métodos*
+
+    * **http_version [ classe ]**
+        * PROPRIEDADES
+            * protocol [ propriedade:string ]
+            * version [ propriedade:string ]
+            * full [ propriedade:string ]
+        * MÉTODOS
+            * *Não possui métodos*
+
+    * **http_response [ classe ]**
+        * PROPRIEDADES
+            * http_version [ propriedade:http_version ]
+            * status_code [ propriedade:int ]
+            * reason [ propriedade:string ]
+            * full [ propriedade:string ]
+        * MÉTODOS
+            * *Não possui métodos*
+
+    * **api [ classe ]**
+        * Esta classe será removida em breve. Por isso, a lista de seus métodos e propriedades não serão documentadas.
