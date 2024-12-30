@@ -23,11 +23,6 @@ class request {
   * @var string A primeira parte da Url, podendo o ser "http" ou "https". Não retorna as barras duplas nem os dois pontos. 
  */
  public string $protocol;
-
- /**
-  * @var header $header Dá acesso às informações de cabeçalho da página.
-  */
- public header $header ;
  
  /**
   * @var string Última parte da Url requisitada pelo usuário. Exemplo: Na Url 
@@ -44,11 +39,6 @@ class request {
   * - DELETE = "DELETE 
   */
  public REQUEST_METHOD $request_method;
-
- /**
-  * @var string Conteúdo de body do cabeçalho HTTP da requisição. 
-  */
- public string $body_content;
 
  /**
   * @var string Endereço raiz do site sem a barra no final incluindo o protocolo. 
@@ -78,8 +68,6 @@ class request {
   $this->request_uri = ltrim ( $_SERVER [ 'REQUEST_URI' ] , "/" ) ;
 
   $this->request_method = REQUEST_METHOD::tryFrom ( $_SERVER [ 'REQUEST_METHOD' ] ) ;
-
-  $this->body_content = file_get_contents ( "php://input" ) ;
 
   $this->website_root=$this->protocol . "//" . $this->get_website_address ( ) ;
 

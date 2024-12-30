@@ -27,7 +27,7 @@ class header {
   * @var http_response Representa a resposta HTTP da página Web que está 
   * sendo acessada.
   */
- public int $response ;
+ public http_response|string $response ;
 
  /**
   * @var string Representa o servidor que está hospedando a página Web.
@@ -37,12 +37,12 @@ class header {
  /**
   * @var DateTime Representa a data em que a página Web foi acessada.
   */
- public DateTime $date ;
+ public DateTime|string $date ;
 
  /**
   * @var content_type Representa o tipo de conteúdo da página Web.
   */
- public content_type $content_type ;
+ public content_type|string $content_type ;
 
  /**
   * @var string Representa a codificação de transferência da página Web.
@@ -57,7 +57,7 @@ class header {
  /**
   * @var DateTime Representa a data da última modificação da página Web.
   */
- public string $last_modified ;
+ public DateTime|string $last_modified ;
 
  /**
   * @var string Representa o ETag da página Web.
@@ -89,23 +89,28 @@ class header {
  public function __construct ( url $url ) {
 
   $headerData = get_headers ( $url->full , true ) ;  
+
+  $this->url = $url ;
+
+  $this->response = $headerData [ 0 ] ;
   
-  $this->response = new http_response ( $headerData [ 0 ] ) ;
+  $this->server = ( isset($headerData["Server"]) ? $headerData["Server"] : "Undefined" ) ;
 
-  $this->server = $headerData [ "Server" ] ;
+  $this->date = ( isset($headerData["Date"]) ? new DateTime($headerData["Date"]) : "Undefined" ) ;
+   
+  $this->content_type = ( isset($headerData["Content-Type"]) ? new content_type($headerData["Content-Type"]) : "Undefined" ) ;
   
-  $this->date = new DateTime ( $headerData [ "Date" ] ) ;
+  $this->transfer_encoding = ( isset($headerData["Transfer-Encoding"]) ? $headerData["Transfer-Encoding"] : "Undefined" ) ;
   
-  $this->content_type = new content_type ( $headerData [ "Content-Type" ] ) ;
+  $this->connection = ( isset($headerData["Connection"]) ? $headerData["Connection"] : "Undefined" ) ;
 
-  $this->transfer_encoding = $headerData [ "Transfer-Encoding" ] ;
-
-  $this->connection = $headerData [ "Connection" ] ;
-
+  $this->last_modified = ( isset($headerData["Last-Modified"]) ? new DateTime($headerData["Last-Modified"]) : "Undefined" ) ;
+  
   $this->method = $this->get_method ( ) ;
-
-  $this->body = file_get_contents ( $this->url->full ) ;
-
+  
+  $content = file_get_contents ( $url->full ) ;
+  $this->body = ( $content == false ? "Undefined" : $content ) ;
+  
  }
 
  /**
@@ -114,19 +119,21 @@ class header {
   */
  private function get_method ( ) : REQUEST_METHOD {
 
-  if ( $_SERVER [ "REQUEST_METHOD" ] == "get" ) {
+  $method = strtolower ( $_SERVER [ "REQUEST_METHOD" ] ) ;
+
+  if ( $method == "get" ) {
    
    return REQUEST_METHOD::GET ;
 
-  } else if ( $_SERVER [ "REQUEST_METHOD" ] == "post" ) {
+  } else if ( $method == "post" ) {
 
    return REQUEST_METHOD::POST ;
 
-  } else if ( $_SERVER [ "REQUEST_METHOD" ] == "put" ) {
+  } else if ( $method == "put" ) {
 
    return REQUEST_METHOD::PUT ;
 
-  } else if ( $_SERVER [ "REQUEST_METHOD" ] == "delete" ) {
+  } else if ( $method == "delete" ) {
 
    return REQUEST_METHOD::DELETE ;
 
