@@ -4,6 +4,7 @@ namespace routes ;
 use DateTime ;
 
 /**
+ * **[EM TESTES]**
  * Permite identificar e obter cabeçalhos HTTP. Note que, se for obter 
  * cabeçalhos do próprio site em que está usando esta classe, é necessário 
  * inicializá-la **depois de ter obtido o conteúdo da página desejada**. 
@@ -90,16 +91,39 @@ class header {
   */
  public string $body ;
 
+ /**
+  * @var string Representa o cabeçalho HTTP puro da página Web.
+  */
+ public string $raw ;
+
 
 
  /**
   * Construtor da classe `header`. Só funcionará se o domínio da Url for 
   * igual ao domínio do site em que está instalado o PHP.
   * @param request $request Objeto `request` de onde se obterá a Url.
+  * @param array $new_header **[EM TESTES]**
+  * Array associativa com novos cabeçalhos para a página Web. 
+  * Use este parâmetro opcional para substituir os cabeçalhos originais da 
+  * página Web. Todos os cabeçalhos serão substituídos. Portanto, caso haja 
+  * algum erro na Array, a página Web não será acessada. As chaves da Array 
+  * devem corresponder às informações de cabeçalho suportadas, a saber:
+  * - 0: Resposta HTTP;
+  * - "Server"
+  * - "Date"
+  * - "Content-Type"
+  * - "Transfer-Encoding"
+  * - "Connection"
+  * - "Last-Modified"
+  * - "ETag"
   */
- public function __construct ( request $request ) {
+ public function __construct ( request $request , array $new_header = [ ] ) {
 
-  $headerData = get_headers ( $request->url->full , true ) ;  
+  if ( $new_header == [ ] ) {
+   $headerData = get_headers ( $request->url->full , true ) ;
+  }  else {
+   $headerData = $new_header ;
+  }
 
   $this->url = $request->url ;
 
@@ -116,12 +140,18 @@ class header {
   $this->connection = ( isset($headerData["Connection"]) ? $headerData["Connection"] : "Undefined" ) ;
 
   $this->last_modified = ( isset($headerData["Last-Modified"]) ? new DateTime($headerData["Last-Modified"]) : "Undefined" ) ;
+
+  $this->e_tag = ( isset ( $headerData [ "ETag" ] ) ? $headerData [ "ETag" ] : "Undefined" ) ;
+
+  $this->lenght = ( isset ( $headerData [ "Content-Length" ] ) ? $headerData [ "Content-Length" ] : 0 ) ;
   
   $this->method = $this->get_method ( ) ;
   
   $content = file_get_contents ( $request->url->full ) ;
   $this->body = ( $content == false ? "Undefined" : $content ) ;
-  
+
+  $this->raw = $this->to_raw ( ) ;
+
  }
 
  /**
@@ -149,6 +179,27 @@ class header {
    return REQUEST_METHOD::DELETE ;
 
   }
+
+ }
+
+ /**
+  * Converte os dados de cabeçalho em uma string pura.
+  * @return string Dados de cabeçalho em uma string pura.
+  */
+ private function to_raw ( ) : string {
+
+  return implode("\r\n", [
+   $this->response,
+   "Server: " . $this->server,
+   "Date: " . ($this->date instanceof DateTime ? $this->date->format(DateTime::RFC1123) : $this->date),
+   "Content-Type: " . $this->content_type,
+   "Transfer-Encoding: " . $this->transfer_encoding,
+   "Connection: " . $this->connection,
+   "Last-Modified: " . ($this->last_modified instanceof DateTime ? $this->last_modified->format(DateTime::RFC1123) : $this->last_modified),
+   "ETag: " . $this->e_tag,
+   "Content-Length: " . $this->lenght,
+   "\r\n" . $this->body
+  ]);
 
  }
 
