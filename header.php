@@ -93,16 +93,15 @@ class header {
 
 
  /**
-  * Construtor da classe `header`. Caso a Url pertença ao próprio domínio 
-  * do site em que a classe ´header` está sendo inicializada, 
-  * certifique-se de que o conteúdo da Url já tenha sido carregado.
-  * @param url $url URL da página Web que está sendo acessada.
+  * Construtor da classe `header`. Só funcionará se o domínio da Url for 
+  * igual ao domínio do site em que está instalado o PHP.
+  * @param request $request Objeto `request` de onde se obterá a Url.
   */
- public function __construct ( url $url ) {
+ public function __construct ( request $request ) {
 
-  $headerData = get_headers ( $url->full , true ) ;  
+  $headerData = get_headers ( $request->url->full , true ) ;  
 
-  $this->url = $url ;
+  $this->url = $request->url ;
 
   $this->response = $headerData [ 0 ] ;
   
@@ -120,7 +119,7 @@ class header {
   
   $this->method = $this->get_method ( ) ;
   
-  $content = file_get_contents ( $url->full ) ;
+  $content = file_get_contents ( $request->url->full ) ;
   $this->body = ( $content == false ? "Undefined" : $content ) ;
   
  }
