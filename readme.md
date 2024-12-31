@@ -6,41 +6,56 @@
 
 ### O que faz?
 
-Quando um visitante entra numa URL do seu website, o servidor deve enviar de volta para o dispositivo do visitante a informação relativa à URL fornecida. Para que isso aconteça, é necessário processar a URL.
+Quando um visitante acessa uma URL do seu website, o servidor deve enviar de volta para o dispositivo do visitante informações relativas à requisição realizada. Para que isso aconteça, é necessário processar a URL.
 
-**Processar** significa 1) identificar as partes de uma URL, 2) comparar essas partes com algum banco de dados e 3) exibir a informação equivalente registrada no banco de dados.
+O termo **"processar"** significa:
+1) identificar as partes de uma URL, 
+2) comparar essas partes com o conteúdo do banco de dados, e 
+3) retornar para o corpo da página a informação equivalente registrada no banco de dados.
 
 O **Routes Manager PHP** auxilia na *identificação das partes de uma URL* e do *tipo de requisição* que foi feita ao website. A partir daí, o desenvolvedor terá condições de devolver ao visitante a informação solicitada.
 
 ### O que não faz?
 
-O **Routes Manager PHP** *não* possui estrutura de banco de dados pré-definida para devolver ao visitante as informações requisitadas.
+O **Routes Manager PHP** *não retorna* para o visitante o conteúdo e página. Também não possui realizar essa ação mediante um banco de dados.
 
 ## Como instalar
 
-1. Copie o conteúdo do projeto para um diretório dentro de seu projeto;
+1. Copie o conteúdo para um diretório dentro de seu projeto;
 2. Num script externo à pasta deste projeto, utilize o seguinte código para incluir **Routes Manager**:
 
 ```php
-require dirname(__FILE__) . "/routesManager/routes.php" ;
+require dirname(__FILE__) . "/routesManagerPHP/routes.php" ;
 ```
 
 3. Acesse as classes de **Routes Manager** através do namespace `\routes`;
 
+A estrutura de diretórios do projeto deve estar da seguinte forma:
+
+- routesManagerPHP
+    - *Conteúdo de routesManagerPHP*
+    - ...
+- index.php
+
+No caso, o script *index.php* deve conter a instrução no passo 2. Fique à vontade para renomear a pasta em que ficará instalado este projeto.
+
 ## Exemplos
 
-**1. Obter a URL acessada por um visitante**
+### **1. Como obter a URL acessada por um visitante**
 
-Para obter informações relativas à URL acessada por um visitante do seu site, faça o seguinte:
+Para obter a URL acessada por um visitante do seu site, faça o seguinte:
 
 ```php
 $request = new \routes\request();
 echo $request->url->full;
 ```
 
-A URL acessada pelo visitante é obtida e seu valor pode ser obtido através da classe `\routes\url`. Essa classe tem uma propriedade chamada **full** que representa a URL completa que o visitante deseja.
+No exemplo acima,
+- `$request` representa o objeto `request` declarado na linha anterior;
+- `$request->url` é uma propriedade do objeto `request` que representa o objeto `url`;
+- `$request->url->full` é uma propriedade do objeto `url` que retornará uma `string` que representa a URL que o visitante está acessando;
 
-No exemplo acima, poderiam ser obtida outras propriedades, como:
+Se desejar obter outras informações, poderia fazer o seguinte:
 
 - domínio: `$request->url->host`;
 - porta: `$request->url->port`;
@@ -48,7 +63,7 @@ No exemplo acima, poderiam ser obtida outras propriedades, como:
 - segumentos: `$request->url->path->full`;
 - argumentos de URL: `$request->query->full`;
 
-As propriedades `path`e `query` são classes de mesmo nome. Essas classes permitem que você obtenha:
+As propriedades `path` e `query` são de uma classe de mesmo nome que elas. Essas classes permitem que você obtenha:
 
 **no caso de `path`**: os segmentos separamente utilizados numa URL;
 **no caso de `query`**: os argumentos separamente utilizados numa URL;
@@ -109,7 +124,7 @@ Abaixo, está o mapa de classes e propriedades de Routes Manager.
         * MÉTODOS
             * slice ( )
 
-    * **header [ classe ]**
+    * **header [ classe ]** *(EM TESTES)*
         * PROPRIEDADES
             * url [ propriedade:url ]
             * response [ propriedade:int ]
@@ -160,4 +175,13 @@ Abaixo, está o mapa de classes e propriedades de Routes Manager.
             * *Não possui métodos*
 
     * **api [ classe ]**
-        * Esta classe será removida em breve. Por isso, a lista de seus métodos e propriedades não serão documentadas.
+        * **Esta classe será removida em breve.** Por isso, a lista de seus métodos e propriedades não serão documentadas.
+
+## Bugs
+
+Atualmente, o projeto possui os seguintes bugs:
+
+- O objeto `header` demora muito para obter as informações de cabeçalho da página, congelando totalmente o website;
+
+- Não possui tratamento de erros eficiente, expondo dados sensíveis e a própria estrutura do website;
+   - Para dirimir esse bug, será criado a classe **Exception** para tratamento de erros;
