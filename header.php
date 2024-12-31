@@ -4,13 +4,23 @@ namespace routes ;
 use DateTime ;
 
 /**
- * Permite identificar e obter cabeçalhos HTTP. O cabeçalho HTTP é uma 
- * mensagem que o servidor envia ao cliente após receber uma requisição 
- * HTTP. O cabeçalho é composto por várias partes, como o tipo de conteúdo, 
- * a codificação de transferência, a conexão, a data, o servidor, o tipo de 
- * conteúdo, o comprimento do conteúdo, a última modificação, o ETag e o 
- * método de requisição. Esta classe permite que você obtenha cada uma 
- * dessas partes do cabeçalho separadamente.
+ * Permite identificar e obter cabeçalhos HTTP. Note que, se for obter 
+ * cabeçalhos do próprio site em que está usando esta classe, é necessário 
+ * inicializá-la **depois de ter obtido o conteúdo da página desejada**. 
+ * No momento, esta classe consegue obter as seguintes informações de 
+ * cabeçalho: 
+ * - Server; 
+ * - Date; 
+ * - Content-Type; 
+ * - Transfer-Encoding; 
+ * - Connection; 
+ * - Last-Modified; 
+ * - ETag; 
+ * - Método de requisição; 
+ * - Corpo da página;  
+ * Se a página não possui algum desses dados do cabeçalho, o valor 
+ * retornado na propriedade correspondente será uma string de valor 
+ * "Undefined".
  * 
  * @author Siael Alves
  * @copyright (c) Copyright 2024, Siael Alves
@@ -83,7 +93,9 @@ class header {
 
 
  /**
-  * Construtor da classe `header`.
+  * Construtor da classe `header`. Caso a Url pertença ao próprio domínio 
+  * do site em que a classe ´header` está sendo inicializada, 
+  * certifique-se de que o conteúdo da Url já tenha sido carregado.
   * @param url $url URL da página Web que está sendo acessada.
   */
  public function __construct ( url $url ) {
