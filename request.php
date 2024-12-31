@@ -2,8 +2,9 @@
 namespace routes ;
 
 /** 
- * Organiza e manipula informações relativas às requisições realizadas pelo cliente. 
- * Também permite realizar requisições para uma Url.
+ * Organiza e manipula informações relativas à requisição atual realizada pelo cliente. 
+ * Também permite realizar requisições para uma Url externa (por enquanto, disponível 
+ * apenas os métodos GET e POST).
  * 
  * @author Siael Alves
  * @copyright (c) Copyright 2024, Siael Alves
