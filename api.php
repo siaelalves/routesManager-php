@@ -1,8 +1,12 @@
 <?php
-namespace routes\api ;
+namespace routes ;
 
-// Classe threads
-require "api/threads.php" ;
+/**
+ * Nada foi implementado para esta classe.
+ * 
+ * @author Siael Alves
+ * @copyright (c) 2024 Siael Alves
+ */
+class api {
 
-// Classe youtube
-require "api/youtube.php" ;
+}

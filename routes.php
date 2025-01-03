@@ -86,27 +86,8 @@ require dirname(__FILE__) . "/path.php" ;
 /**
  * Namespace `api`:
  * Manipula requisições de API específicas. Atualmente, 
- * a utilização parcial das APIs para Youtube e Threads. 
- * Em breve, será substituída por uma namespace genérica 
- * e mais eficiente.
+ * essa classe ainda não está implementada.
  */
 require dirname(__FILE__) . "/api.php" ;
-
-// ------------------ //
-
-/**
- * @var \routes\api\youtube\channel Objeto 
- * `my_youtube_channel` representa o canal do Youtube 
- * "Diário Code" e permite acessar determinadas 
- * informações do canal.
- */
-$my_youtube_channel = new \routes\api\youtube\channel ( api\youtube\KEYS::CHANNEL_ID->value , "diariocode" , "Diário Code" , new \routes\url ( "https://youtube.com/@diariocode" ) ) ;
-
-/**
- * @var \routes\api\threads\user Objeto `my_threads_account` 
- * permite acessar determinadas informações da conta do 
- * usuário `Diário Code` da rede social `Threads`.
- */
-$my_threads_account = new \routes\api\threads\user ( ) ;
 
 // ------------------ //
