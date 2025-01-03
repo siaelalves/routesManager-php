@@ -1,5 +1,7 @@
 # Routes Manager PHP
 
+**Versão** 0.1.0
+
 **Objetivo** Permite manipular e obter informações relativas às requisições HTTP e URLs feitas pelo visitante do website.
 
 ## Detalhes
@@ -175,7 +177,7 @@ Abaixo, está o mapa de classes e propriedades de Routes Manager.
             * *Não possui métodos*
 
     * **api [ classe ]**
-        * **Esta classe será removida em breve.** Por isso, a lista de seus métodos e propriedades não serão documentadas.
+        * **Esta classe ainda não foi implementada.** Ainda não possui métodos e nem propriedades.
 
 ## Bugs
 
@@ -183,5 +185,5 @@ Atualmente, o projeto possui os seguintes bugs:
 
 - O objeto `header` demora muito para obter as informações de cabeçalho da página, congelando totalmente o website;
 
-- Não possui tratamento de erros eficiente, expondo dados sensíveis e a própria estrutura do website;
-   - Para dirimir esse bug, será criado a classe **Exception** para tratamento de erros;
+- A maioria das funções não possui tratamento de erros eficiente, expondo dados sensíveis e a própria estrutura do website;
+   - Para dirimir esse bug, em versões futuras será criado a classe **Exception** para tratamento de erros;
