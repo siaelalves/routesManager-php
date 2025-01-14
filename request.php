@@ -13,6 +13,18 @@ namespace routes ;
 class request {
 
  /**
+  * @var string Obtém o IP do servidor onde está instalado o PHP. Se, por algum motivo, 
+  * essa informação não puder ser obtida, atribui-se o valor `""` (vazio).
+  */
+ public string $server_address ;
+
+ /**
+  * @var string Obtém o IP do cliente que está requisitando dados do servidor. Se, por 
+  * algum motivo, essa informação não puder ser obtida, atribui-se o valor `""` (vazio).
+  */
+ public string $remote_address ;
+
+ /**
   * @var string Representa o endereço do website para onde é enviada a requisição. Se 
   * a Url a ser requisitada é 
   * "http://diariocode.com.br/blog/linux/como-personalizar-diretorio-padrao-xampp-linux-debian", 
@@ -61,6 +73,10 @@ class request {
   * Construtor da classe `request`.
   */
  public function __construct ( ) {
+
+  $this->server_address = ( isset ( $_SERVER [ "SERVER_ADDR" ] ) ) ? ( $_SERVER [ "SERVER_ADDR" ] ) : ( "" ) ;
+
+  $this->remote_address = ( isset ( $_SERVER [ "REMOTE_ADDR" ] ) ) ? ( $_SERVER [ "REMOTE_ADDR" ] ) : ( "" ) ;
 
   $this->protocol = $this->get_protocol ( ) ;
 
@@ -114,6 +130,21 @@ class request {
   }
 
   return "localhost" ;
+
+ }
+
+ /**
+  * Verifica se o servidor onde o PHP está sendo executado é um servidor 
+  * local (192.168.***.***) ou é on-line.
+  * @return bool Retorna `true` se for local; `false` se for on-line.
+  */
+ public function is_local_server ( ) : bool {
+
+  if ( str_starts_with ( $this->server_address , "192.168." ) ) {
+   return true ;
+  }
+
+  return false ;
 
  }
 
