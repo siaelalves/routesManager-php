@@ -1,6 +1,6 @@
 # Routes Manager PHP
 
-**Versão** 0.1.0
+**Versão** 0.3.0
 
 **Objetivo** Permite manipular e obter informações relativas às requisições HTTP e URLs feitas pelo visitante do website.
 
@@ -79,6 +79,8 @@ Abaixo, está o mapa de classes e propriedades de Routes Manager.
 
     * **request [ classe ]**
         * PROPRIEDADES
+            * server_address [ propriedade:string ]
+            * remote_address [ propriedade:string ]
             * http_host [ propriedade:string ]
             * protocol [ propriedade:string ]
             * header [ propriedade:header ]
@@ -90,6 +92,7 @@ Abaixo, está o mapa de classes e propriedades de Routes Manager.
         * MÉTODOS
             * get_protocol ( )
             * get_website_address ( )
+            * is_local_server ( )
             * get ( )
             * post ( )
 
@@ -187,3 +190,10 @@ Atualmente, o projeto possui os seguintes bugs:
 
 - A maioria das funções não possui tratamento de erros eficiente, expondo dados sensíveis e a própria estrutura do website;
    - Para dirimir esse bug, em versões futuras será criado a classe **Exception** para tratamento de erros;
+
+## Atualizações
+
+- **v0.3.0:
+    - Adicionadas 2 propriedades `$server_address` e `$remote_address` à classe `request` para obter o IP do servidor e do cliente que está requisitando dados.
+    
+    - Adicionado novo método `is_local_server ( )` que determina se o servidor é local ou se está on-line.
