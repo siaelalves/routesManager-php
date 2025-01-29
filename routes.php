@@ -6,7 +6,7 @@
  * inseridas abaixo fazem parte deste namespace.
  * 
  * @author Siael Alves
- * @copyright (c) Copyright 2024, Siael Alves
+ * @copyright (c) Copyright 2024 - 2025, Siael Alves
  * @link Indisponível
  */
 namespace routes ;

@@ -6,7 +6,7 @@ namespace routes ;
  * Permite obter os parâmetros da Url separadamente.
  * 
  * @author Siael Alves
- * @copyright (c) Copyright 2024, Siael Alves
+ * @copyright (c) Copyright 2024 - 2025, Siael Alves
  * @link Indisponível
 */
 class query {

@@ -10,7 +10,7 @@ namespace routes ;
  * de conteúdo completo.
  * 
  * @author Siael Alves
- * @copyright (c) Copyright 2024, Siael Alves
+ * @copyright (c) Copyright 2024 - 2025, Siael Alves
  * @link Indisponível
  */
 class content_type {

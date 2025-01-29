@@ -6,7 +6,7 @@ namespace routes ;
  * É possível obter o tipo de protocolo utilizado e sua versão.
  * 
  * @author Siael Alves
- * @copyright (c) Copyright 2024, Siael Alves
+ * @copyright (c) Copyright 2024 - 2025, Siael Alves
  * @link Indisponível
  */
 class http_version {

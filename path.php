@@ -7,7 +7,7 @@ namespace routes ;
  * e manusear os argumentos de URL, utilize a classe `routes\query`.
  * 
  * @author Siael Alves
- * @copyright (c) Copyright 2024, Siael Alves
+ * @copyright (c) Copyright 2024 - 2025, Siael Alves
  * @link Documentação: https://siaelalves.notion.site/path-7af5ea9684944a62a581f592bf112a90?pvs=4
  */
 class path {

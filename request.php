@@ -7,7 +7,7 @@ namespace routes ;
  * apenas os métodos GET e POST).
  * 
  * @author Siael Alves
- * @copyright (c) Copyright 2024, Siael Alves
+ * @copyright (c) Copyright 2024 - 2025, Siael Alves
  * @link Indisponível
 */
 class request {

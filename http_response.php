@@ -9,7 +9,7 @@ namespace routes ;
  * cada uma dessas partes da resposta separadamente.
  * 
  * @author Siael Alves
- * @copyright (c) Copyright 2024, Siael Alves
+ * @copyright (c) Copyright 2024 - 2025, Siael Alves
  * @link Indisponível
  */
 class http_response {
