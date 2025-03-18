@@ -156,7 +156,8 @@ class header {
 
  /**
   * Obtém o método de requisição HTTP utilizado.
-  * @return REQUEST_METHOD Método de requisição HTTP utilizado.
+  * @return REQUEST_METHOD Método de requisição HTTP utilizado. Caso 
+  * não seja possível determinar, retorna "get".
   */
  private function get_method ( ) : REQUEST_METHOD {
 
@@ -179,6 +180,8 @@ class header {
    return REQUEST_METHOD::DELETE ;
 
   }
+
+  return REQUEST_METHOD::GET ;
 
  }
 
