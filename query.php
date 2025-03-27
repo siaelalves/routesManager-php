@@ -45,56 +45,19 @@ class query {
   */
  public function __construct ( $url_query ) {
 
-  if ( $url_query == "" ) {
-   $this->full = "" ;
-   $this->parameters = [ ] ;
-   $this->keys = [ ] ;
-   $this->values = [ ] ;
-   return ;
-  }
-
   if ( gettype ( $url_query ) != "string" ) {
    throw new TypeError ( "O argumento de construção classe 'query' deve 
    ser do tipo 'string'. Ao invés disso, foi fornecido um tipo " . 
    gettype ( $url_query ) . "." ) ;
   }
 
-  $this->full = $url_query;
+  $this->full = $url_query ;
 
-  if ( !str_contains ( $this->full , "&" ) ) {
-   $this->parameters = [ ] ;
-   $this->keys = [ ] ;
-   $this->values = [ ] ;
-   return ;
-  }
+  parse_str ( $url_query , $this->parameters ) ;
 
-  $this->parameters = explode ( "&" , $this->full ) ;
+  $this->keys = array_keys ( $this->parameters ) ;
 
-  $valid_parameters = array_filter ( $this->parameters , function ( $parameter ) { 
-   return str_contains ( $parameter , "=" ) ;
-  } ) ;
-
-  if ( count ( $valid_parameters ) == 0 ) {
-   $this->keys = [ ] ;
-   $this->values = [ ] ;
-   return ;
-  }
-
-  foreach ( $valid_parameters as $parameter ) {
-   array_push ( $this->keys , explode ( "=" , $parameter ) [ 0 ] ) ;
-  }
-
-  foreach ( $valid_parameters as $parameter ) {
-   array_push ( $this->values , explode ( "=" , $parameter ) [ 1 ] ) ;
-  }
-
-  // parâmeteros para uma matriz associativa
-  $this->parameters = [ ] ;
-  $v = 0 ;
-  foreach ( $this->keys as $key ) {
-   $this->parameters [ "$key" ] = $this->values [ $v ] ;
-   $v++;
-  }
+  $this->values = array_values ( $this->parameters ) ;
 
  }
 
