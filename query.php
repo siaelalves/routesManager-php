@@ -45,10 +45,21 @@ class query {
   */
  public function __construct ( $url_query ) {
 
+  if ( $url_query == null ) {
+   $this->full = "" ;
+   $this->parameters = [ ] ;
+   $this->keys = [ ] ;
+   $this->values = [ ] ;
+   return ;
+  }
+
   if ( gettype ( $url_query ) != "string" ) {
-   throw new TypeError ( "O argumento de construção classe 'query' deve 
+   $err = new TypeError ( "O argumento de construção classe 'query' deve 
    ser do tipo 'string'. Ao invés disso, foi fornecido um tipo " . 
    gettype ( $url_query ) . "." ) ;
+   
+   echo $err->getMessage ( ) ;
+   exit ;
   }
 
   $this->full = $url_query ;
